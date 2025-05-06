@@ -175,8 +175,7 @@ if __name__ == "__main__":
     # Define os argumentos possíveis no terminal
     parser = argparse.ArgumentParser(description="Gerenciador de Arquivos")
     parser.add_argument("--diretorio", "-d", help="Diretório a processar")
-    parser.add_argument("comando", choices=["organizar", "backup", "relatorio"], 
-                        help="Comando a executar")
+    parser.add_argument("comando", choices=["organizar", "backup", "relatorio"], help="Comando a executar")
     parser.add_argument("--nome", "-n", help="Nome para o backup")
     
     args = parser.parse_args()  # Lê os argumentos fornecidos
