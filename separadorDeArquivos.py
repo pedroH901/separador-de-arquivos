@@ -88,8 +88,6 @@ class GerenciadorArquivos:
                 # Isso pode acontecer se o arquivo já existir na pasta de destino ou se houver problemas de permissão.
                 logger.error(f"Erro ao mover {item}: {e}") #registra erros e o resultado final.
 
-
-        
         # Informa o total de arquivos organizados
         logger.info(f"Organização concluída: {arquivos_movidos} arquivos movidos")
         return arquivos_movidos
