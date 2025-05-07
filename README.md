@@ -8,4 +8,5 @@ Integrantes:
 Antonio > Primeira função (def __init__(self, diretorio_base=None): ...)
 Danilo Gutierre > Segunda função (def organizar_por_extensao(self): ...)
 Gabriel Fernandes > Terceira função (def criar_backup(self, nome_backup=None): ...)
+<<<<<<< HEAD
 Pedro Henrique > Ultima função (def gerar_relatorio(self): ...), parte de fazer o script rodar no terminal 
