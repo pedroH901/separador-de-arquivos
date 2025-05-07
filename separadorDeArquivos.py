@@ -50,43 +50,47 @@ class GerenciadorArquivos:
     def organizar_por_extensao(self):
         """Organiza arquivos por extensão em subpastas."""
         
-        # Cria subpastas para cada categoria, se ainda não existirem
+        # Cria as pastas das categorias (como documentos, imagens, código, etc.) dentro do diretório base, caso ainda não existam.
         for categoria in self.categorias:
-            Path(os.path.join(self.diretorio_base, categoria)).mkdir(exist_ok=True)
+            Path(os.path.join(self.diretorio_base, categoria)).mkdir(exist_ok=True) #mkdir(): Cria uma pasta // #exist_ok=True: Se a pasta já existir, não gera erro. 
         
         arquivos_movidos = 0  # Contador de arquivos movidos
         
         # Percorre todos os arquivos e pastas do diretório base
         for item in os.listdir(self.diretorio_base):
-            caminho_completo = os.path.join(self.diretorio_base, item)
+            caminho_completo = os.path.join(self.diretorio_base, item) #os.listdir(): pega todos os itens do diretório.
             
             # Ignora se o item for uma pasta (só processa arquivos)
             if os.path.isdir(caminho_completo):
-                continue
+                continue #os.path.isdir(): verifica se é pasta.
             
             # Pega a extensão do arquivo
-            _, extensao = os.path.splitext(item)
-            extensao = extensao.lower()
+            _, extensao = os.path.splitext(item) #os.path.splitext(): separa nome e extensão do arquivo.
+            extensao = extensao.lower() # Converte a extensão para minúsculas para evitar problemas de comparação (ex: .JPG vs .jpg)
             
             # Define a categoria padrão como "outros"
             categoria_destino = "outros"
             
             # Verifica a qual categoria o arquivo pertence
-            for categoria, extensoes in self.categorias.items():
+            for categoria, extensoes in self.categorias.items(): #items(): Retorna uma lista de tuplas (chave, valor) do dicionário.
                 if extensao in extensoes:
                     categoria_destino = categoria
                     break
             
-            try:
-                # Define o caminho de destino e move o arquivo
-                destino = os.path.join(self.diretorio_base, categoria_destino, item)
-                shutil.move(caminho_completo, destino)
-                arquivos_movidos += 1
-            except Exception as e:
-                # Em caso de erro, registra no log
-                logger.error(f"Erro ao mover {item}: {e}")
+            try: #try/except: evita que o programa pare por erro.
+                destino = os.path.join(self.diretorio_base, categoria_destino, item) 
+                shutil.move(caminho_completo, destino) #shutil.move(): move o arquivo para o novo local.
+            except Exception as e: 
+                # Exception: É o tipo genérico de erro (pode ser FileNotFoundError, ValueError, etc.)
+                # as e: Salva o erro na variável e para que possamos ver a mensagem de erro ou tratá-lo de alguma forma.
+                
+                # Registra no log qualquer erro durante o processo de mover o arquivo
+                # Isso pode acontecer se o arquivo já existir na pasta de destino ou se houver problemas de permissão.
+                logger.error(f"Erro ao mover {item}: {e}") #registra erros e o resultado final.
+
+
         
-        # Log final com total de arquivos organizados
+        # Informa o total de arquivos organizados
         logger.info(f"Organização concluída: {arquivos_movidos} arquivos movidos")
         return arquivos_movidos
 
