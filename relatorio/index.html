@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header id="inicio">
+  <nav>
+    <ul>
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#habilidades">Habilidades</a></li>
+      <li><a href="#certificados">Certificados</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="Quem eu sou">
+  <h1>Quem eu sou</h1>
+  <p>Meu nome é <strong>Pedro</strong> e sou um desenvolvedor.</p>
+  <p>Desde cedo venho estudando na área de TI e sempre fui muito interessado por tecnologia. Estou sempre estudando linguagens de programação como um todo, sempre querendo aperfeiçoar o que eu já sei.</p>
+  <p>Estou estudando na escola técnica <strong>SENAI Morvan Figueiredo</strong></p>
+  <p>Enquanto lia "Os segredos da mente milionária", me deparei com uma frase que achei muito interessante:</p>
+  <p>"Não seja um sabe-tudo, seja um aprenda-tudo".</p>
+</section>
+
+<div class="habilidades" id="habilidades">
+  <h1>Habilidades</h1>
+  <section id="comunicacao"><h3>Comunicação</h3>
+    <p>Habilidade essencial para trabalhar em equipe e garantir que todos estejam na mesma página. <br>Tenho experiência em comunicar ideias de forma clara e eficaz.</p>
+  </section>
+  <section id="adaptabilidade"><h3>Adaptabilidade</h3>
+    <p>Capacidade de se ajustar rapidamente a novas condições e desafios. <br>Estou sempre pronto para aprender novas tecnologias e metodologias.</p>
+  </section>
+  <section id="solucao-de-problemas"><h3>Solução de Problemas</h3>
+    <p>Habilidade de identificar, analisar e resolver problemas de forma eficiente. <br>Tenho experiência em encontrar soluções criativas e eficazes para desafios complexos.</p>
+  </section>
+  <section id="metodologia-scrum"><h3>Metodologia Scrum</h3>
+    <p>Conhecimento em metodologias ágeis, especialmente Scrum. <br>Experiência em trabalhar em sprints, realizar reuniões diárias e entregar incrementos de produto de forma iterativa.</p>
+  </section>
+  <section id="trabalho-em-equipe"><h3>Trabalho em Equipe</h3>
+  <p>Capacidade de colaborar efetivamente com outros membros da equipe para alcançar objetivos comuns. <br>Experiência em trabalhar em projetos colaborativos e em ambientes de equipe.</p>
+</section>
+<button id="mostrar-mais-habilidades">Tem mais!</button>
+<div id="lista-de-habilidades" style="display: none;">
+  <ul>
+    <li>Application Programming Interface (API)</li>
+    <li>BigQuery</li>
+    <li>Cloud computing</li>
+    <li>Cloud infrastructure</li>
+    <li>Cloud security</li>
+    <li>Cloud storage</li>
+    <li>Compute engine</li>
+    <li>Computer Network Management</li>
+    <li>Data ingestion</li>
+    <li>Data pipelines</li>
+    <li>Data types</li>
+    <li>Debugging</li>
+    <li>Digital Transformation</li>
+    <li><strong>Google Cloud Platform</strong></li>
+    <li>Identity access management (IAM)</li>
+    <li>Information Policy</li>
+    <li>Interaction Design</li>
+    <li>Internet of Things (IoT)</li>
+    <li>Kubernetes</li>
+    <li><strong>Machine Learning (ML)</strong></li>
+    <li>Network Security</li>
+    <li>Programming Control Structures</li>
+    <li><strong>Property Management</strong></li>
+    <li>Prototyping</li>
+    <li>Pub/sub</li>
+    <li>System Monitoring</li>
+    <li>TensorFlow</li>
+    <li>Test Methods</li>
+    <p>Tudo isso pode ser visto pelo <strong><a href="https://www.credly.com/users/pedro-henrique.6628ac58" target="_blank"> meu perfil no Credly!</a></strong></p>
+
+  </ul>
+</div>
+
+<section id="ferramentas"><h1>Ferramentas</h1>
+  <ul>
+    <li>Figma</li>
+    <li>BootStrap</li>
+    <li>VS Code</li>
+    <li>Git</li>
+    <li>GitHub</li>
+    <li>Google Cloud Platform</li>
+    <li>Node.js</li>
+    <li>Notion</li>
+    <li>Trello</li>
+    <li>HTML5</li>
+    <li>CSS3</li>
+    <li>JavaScript</li>
+    <li>Java</li>
+  </ul>
+</section>
+
+<script>
+  document.getElementById('mostrar-mais-habilidades').addEventListener('click', function() {
+    var moreSkillsList = document.getElementById('lista-de-habilidades');
+    if (moreSkillsList.style.display === 'none') {
+      moreSkillsList.style.display = 'block';
+    } else {
+      moreSkillsList.style.display = 'none';
+    }
+  });
+</script>
+
+
+</body>
+
+</html>
