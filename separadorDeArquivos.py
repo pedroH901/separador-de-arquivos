@@ -93,7 +93,7 @@ class GerenciadorArquivos:
         logger.info(f"Organização concluída: {arquivos_movidos} arquivos movidos")
         return arquivos_movidos
 
-    def criar_backup(self, nome_backup=None):
+    def criar_backup(self, nome_backup=None): # O self refere-se à instância atual da classe, permitindo que o método acesse atributos e outros métodos da mesma instância.
         """Cria um backup compactado do diretório."""
         
         # Gera timestamp com data e hora
@@ -105,20 +105,24 @@ class GerenciadorArquivos:
         
         try:
             # Cria o arquivo ZIP
-            with zipfile.ZipFile(caminho_backup, 'w') as zip_file:
-                for root, _, files in os.walk(self.diretorio_base):
+            with zipfile.ZipFile(caminho_backup, 'w') as zip_file: #zipfile.ZipFile: Classe do Python para manipular arquivos ZIP
+                for root, _, files in os.walk(self.diretorio_base): #está percorrendo recursivamente todos os diretórios e arquivos dentro do diretório base. O método os.walk() gera uma tupla para cada diretório: o caminho atual (root), uma lista de subdiretórios (_), e uma lista de arquivos (files).
                     # Ignora a pasta de backups para evitar incluir ela no próprio backup
                     if "_backups" in root:
                         continue
                         
-                    for file in files:
-                        file_path = os.path.join(root, file)
-                        
+                    for file in files: #itera sobre cada nome de arquivo na lista files que foi obtida anteriormente pelo os.walk()
+                        file_path = os.path.join(root, file) # Windows usa barra invertida \ como separador
+                                                             # Linux/Mac usam barra normal / como separador
+                                                             # os.path.join() usa o separador correto para o sistema operacional atual
+                                                             # e evita problemas com barras duplicadas ou ausentes entre diretórios 
                         # Adiciona o arquivo ao ZIP com caminho relativo
                         zip_file.write(
-                            file_path, 
-                            os.path.relpath(file_path, self.diretorio_base)
-                        )
+                            file_path, # O caminho absoluto do arquivo no sistema
+                            os.path.relpath(file_path, self.diretorio_base) # O caminho dentro do arquivo zip 
+                        )                                                   # Entrada: O caminho absoluto completo (ex: "/dados/projetos/docs/manual.pdf")
+                                                                            # inicio: O diretório base de referência (ex: "/dados")
+                                                                            # Saída: O caminho relativo (ex: "projetos/docs/manual.pdf")
             
             # Log de sucesso
             logger.info(f"Backup criado: {caminho_backup}")
