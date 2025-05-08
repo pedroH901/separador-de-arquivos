@@ -52,47 +52,46 @@ class GerenciadorArquivos:
         """Organiza arquivos por extensão em subpastas."""
         
         # Cria as pastas das categorias (como documentos, imagens, código, etc.) dentro do diretório base, caso ainda não existam.
-        for categoria in self.categorias:
+        for categoria in self.categorias: #self.categorias → é o dicionário com os tipos de arquivos.
             Path(os.path.join(self.diretorio_base, categoria)).mkdir(exist_ok=True) #mkdir(): Cria uma pasta // #exist_ok=True: Se a pasta já existir, não gera erro. 
         
         arquivos_movidos = 0  # Contador de arquivos movidos
         
-        # Percorre todos os arquivos e pastas do diretório base
-        for item in os.listdir(self.diretorio_base):
-            caminho_completo = os.path.join(self.diretorio_base, item) #os.listdir(): pega todos os itens do diretório.
+        # Olha tudo que tem na pasta escolhida, arquivo por arquivo.
+        for item in os.listdir(self.diretorio_base): #os.listdir(): pega todos os itens do diretório.
+            caminho_completo = os.path.join(self.diretorio_base, item) #os.path.join serve pra juntar partes de caminhos de arquivos de forma segura, sem se preocupar com a barra (/ ou \) do sistema operacional.
             
-            # Ignora se o item for uma pasta (só processa arquivos)
-            if os.path.isdir(caminho_completo):
-                continue #os.path.isdir(): verifica se é pasta.
+            # Aqui ele checa se o que tá analisando é uma pasta. Se for, ele não faz nada com ela e segue pro próximo arquivo (só processa arquivos)
+            if os.path.isdir(caminho_completo): #os.path.isdir(): verifica se é pasta.
+                continue #continue: faz o programa voltar pro começo do loop e ir pro próximo item da lista.
             
             # Pega a extensão do arquivo
             _, extensao = os.path.splitext(item) #os.path.splitext(): separa nome e extensão do arquivo.
             extensao = extensao.lower() # Converte a extensão para minúsculas para evitar problemas de comparação (ex: .JPG vs .jpg)
             
             # Define a categoria padrão como "outros"
-            categoria_destino = "outros"
+            categoria_destino = "outros" # Ou seja, se o programa não reconhecer a extensão do arquivo como sendo de documento, imagem, código, etc., ele vai jogar o arquivo na pasta "outros"
             
-            # Verifica a qual categoria o arquivo pertence
-            for categoria, extensoes in self.categorias.items(): #items(): Retorna uma lista de tuplas (chave, valor) do dicionário.
+            # Verifica a qual categoria o arquivo pertence, se encontrar, define a categoria certa pro arquivo (em vez de deixar como "outros").
+            for categoria, extensoes in self.categorias.items():
                 if extensao in extensoes:
                     categoria_destino = categoria
                     break
             
-            try: #try/except: evita que o programa pare por erro.
+            # Tenta mover o arquivo pra dentro da pasta da categoria certa (tipo "documentos", "imagens", etc.), Usa shutil.move pra isso
+            try: 
                 destino = os.path.join(self.diretorio_base, categoria_destino, item) 
-                shutil.move(caminho_completo, destino) #shutil.move(): move o arquivo para o novo local.
-            except Exception as e: 
-                # Exception: É o tipo genérico de erro (pode ser FileNotFoundError, ValueError, etc.)
-                # as e: Salva o erro na variável e para que possamos ver a mensagem de erro ou tratá-lo de alguma forma.
-                
-                # Registra no log qualquer erro durante o processo de mover o arquivo
-                # Isso pode acontecer se o arquivo já existir na pasta de destino ou se houver problemas de permissão.
-                logger.error(f"Erro ao mover {item}: {e}") #registra erros e o resultado final.
+                shutil.move(caminho_completo, destino)
+            except Exception as e: #try/except: evita que o programa pare por erro.
 
-        # Informa o total de arquivos organizados
-        logger.info(f"Organização concluída: {arquivos_movidos} arquivos movidos")
-        return arquivos_movidos
+                # Registra no log qualquer erro durante o processo de mover o arquivo, mostra no log qual arquivo deu problema e o motivo.
+                logger.error(f"Erro ao mover {item}: {e}") 
 
+            # Informa o total de arquivos organizados e registra no log que a organização dos arquivos terminou.
+            logger.info(f"Organização concluída: {arquivos_movidos} arquivos movidos")
+            return arquivos_movidos
+
+    
     def criar_backup(self, nome_backup=None):
         """Cria um backup compactado do diretório."""
         
